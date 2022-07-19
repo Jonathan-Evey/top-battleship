@@ -1,31 +1,30 @@
 const Gameboard = () => {
 	const playGrid = [];
-	const missedShots = [];
-	const PlacedShips = [];
+	const shotsMissed = [];
+	const shotsHit = [];
+	const placedShips = [];
 	const sunkShips = [];
 
 	const shipKeys = [
 		{
-			carrier: {
-				name: "Carrier",
-				size: 5,
-			},
-			battleship: {
-				name: "Battleship",
-				size: 4,
-			},
-			destroyer: {
-				name: "Destroyer",
-				size: 3,
-			},
-			submarine: {
-				name: "Submarine",
-				size: 3,
-			},
-			patrolBoat: {
-				name: "Patrol Boat",
-				size: 2,
-			},
+			name: "Carrier",
+			size: 5,
+		},
+		{
+			name: "Battleship",
+			size: 4,
+		},
+		{
+			name: "Destroyer",
+			size: 3,
+		},
+		{
+			name: "Submarine",
+			size: 3,
+		},
+		{
+			name: "Patrol Boat",
+			size: 2,
 		},
 	];
 
@@ -56,19 +55,57 @@ const Gameboard = () => {
 		return;
 	};
 
-	const place = (selectedSquare, shipName, direction) => {
-		let shipBeingPlaced = shipName;
-		shipBeingPlaced = Ship(shipKeys.shipName.size);
+	const place = (coordinates, shipName, direction) => {
+		let selectedShip = shipKeys.find((ship) => ship.name === shipName);
+		selectedShip = Ship(shipKeys.shipName.size);
 		if (direction === horizontal) {
+			let selectedCoordinatesIndex = playGrid.findIndex(
+				cell === coordinates
+			);
 			for (let i = 0; i < shipBeingPlaced.length; i++) {
-				shipBeingPlaced.placement.push(selectedSquare);
+				shipBeingPlaced.placement.push(
+					playGrid[selectedCoordinatesIndex + i]
+				);
 			}
-			PlacedShips.push(shipBeingPlaced);
+			placedShips.push(shipBeingPlaced);
 		}
 	};
 
+	const receiveAttack = (coordinates) => {
+		if (
+			shotsMissed.find(coordinates) === true ||
+			shotsHit.find(coordinates) === true
+		) {
+			return;
+		} else if (isHit(coordinates) === true) {
+			shotsHit.push(coordinates);
+			let hitShip = findHitShip();
+			hitShip.hit(coordinates);
+			if (hitShip.isSunk() === true) {
+				console.log(`Enomy ${hitShip.name} has been sunk!`);
+				//checkWin()
+			}
+			return;
+		} else {
+			shotsMissed.push(coordinates);
+		}
+	};
+
+	function isHit(selectedSquare) {
+		let serchedShipPlacements;
+		for (let i = 0; i < placedShips.length; i++) {
+			serchedShipPlacements = placedShips[i].placement;
+			if (serchedShipPlacements.includes(selectedSquare)) {
+				console.log("hit");
+				return true;
+			}
+		}
+		return;
+	}
+
 	return {
 		playGrid,
+		receiveAttack,
 		init,
 	};
 };
