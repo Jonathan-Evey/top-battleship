@@ -44,17 +44,15 @@ describe("test Gameboard construction and functions", () => {
 	let TestPlayer;
 	beforeEach(() => {
 		TestPlayer = Gameboard();
+		TestPlayer.init();
 	});
 	it("TestPlayer.gameGrid.length should be 100 (10X10 grid size for classic game)", () => {
-		TestPlayer.init();
 		expect(TestPlayer.playGrid.length).toBe(100);
 	});
 	it("TestPlayer.gameGrid[0] should be 'A: 1')", () => {
-		TestPlayer.init();
 		expect(TestPlayer.playGrid[0]).toBe("A: 1");
 	});
 	it("TestPlayer.gameGrid[99] should be 'J: 10')", () => {
-		TestPlayer.init();
 		expect(TestPlayer.playGrid[99]).toBe("J: 10");
 	});
 });
