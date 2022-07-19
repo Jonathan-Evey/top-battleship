@@ -1,7 +1,6 @@
 const Ship = (number) => {
-	let length = number;
-
-	let hits = [];
+	const length = number;
+	const hits = [];
 
 	const hit = (input) => {
 		hits.push(input);
@@ -15,7 +14,12 @@ const Ship = (number) => {
 		}
 	};
 
-	return { length, hits, hit, isSunk };
+	return {
+		length,
+		hits,
+		hit,
+		isSunk,
+	};
 };
 
 module.exports = Ship;
