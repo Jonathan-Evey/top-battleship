@@ -29,8 +29,8 @@ describe("test Ship construction and functions", () => {
 const Gameboard = require("./gameboard");
 
 describe("test Gameboard construction and functions", () => {
-	it("place all ships at specicic coordinates by calling the Ship()", () => {
-		expect(Gameboard.place());
+	it("gameboard shoud be a 10X10 grid with A to J and 1 - 10", () => {
+		expect(Gameboard.init()).tobe;
 	});
 });
 
