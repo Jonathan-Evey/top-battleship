@@ -1,5 +1,6 @@
 const Ship = (number) => {
 	const length = number;
+	const placement = [];
 	const hits = [];
 
 	const hit = (input) => {
@@ -16,6 +17,7 @@ const Ship = (number) => {
 
 	return {
 		length,
+		placement,
 		hits,
 		hit,
 		isSunk,
