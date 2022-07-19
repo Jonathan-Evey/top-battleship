@@ -1,5 +1,33 @@
 const Gameboard = () => {
 	const playGrid = [];
+	const missedShots = [];
+	const PlacedShips = [];
+	const sunkShips = [];
+
+	const shipKeys = [
+		{
+			carrier: {
+				name: "Carrier",
+				size: 5,
+			},
+			battleship: {
+				name: "Battleship",
+				size: 4,
+			},
+			destroyer: {
+				name: "Destroyer",
+				size: 3,
+			},
+			submarine: {
+				name: "Submarine",
+				size: 3,
+			},
+			patrolBoat: {
+				name: "Patrol Boat",
+				size: 2,
+			},
+		},
+	];
 
 	const init = () => {
 		for (let i = 0; i < 100; i++) {
@@ -26,6 +54,17 @@ const Gameboard = () => {
 			}
 		}
 		return;
+	};
+
+	const place = (selectedSquare, shipName, direction) => {
+		let shipBeingPlaced = shipName;
+		shipBeingPlaced = Ship(shipKeys.shipName.size);
+		if (direction === horizontal) {
+			for (let i = 0; i < shipBeingPlaced.length; i++) {
+				shipBeingPlaced.placement.push(selectedSquare);
+			}
+			PlacedShips.push(shipBeingPlaced);
+		}
 	};
 
 	return {
