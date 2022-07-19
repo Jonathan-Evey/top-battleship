@@ -1,5 +1,6 @@
-const Ship = (number) => {
-	const length = number;
+const Ship = (obj) => {
+	const name = obj.name;
+	const length = obj.size;
 	const placement = [];
 	const hits = [];
 
@@ -16,6 +17,7 @@ const Ship = (number) => {
 	};
 
 	return {
+		name,
 		length,
 		placement,
 		hits,
