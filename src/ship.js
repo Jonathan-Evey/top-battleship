@@ -1,6 +1,8 @@
 const Ship = (number) => {
 	let length = number;
 
+	let coordinates = [];
+
 	let hits = [];
 
 	const hit = (input) => {
@@ -15,7 +17,7 @@ const Ship = (number) => {
 		}
 	};
 
-	return { length, hits, hit, isSunk };
+	return { length, coordinates, hits, hit, isSunk };
 };
 
 module.exports = Ship;
