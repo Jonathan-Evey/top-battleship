@@ -53,7 +53,8 @@ const Gameboard = () => {
 				playGrid.push(`J: ${i - 89}`);
 			}
 		}
-		return;
+
+		return console.log(playGrid);
 	};
 
 	//places a ship based on player input, and stores the placed ships in placedShips
