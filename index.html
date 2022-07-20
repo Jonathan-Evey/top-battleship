@@ -6,9 +6,63 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script defer src="./dist/runtime.bundle.js"></script>
 		<script defer src="./dist/main.bundle.js"></script>
+		<link rel="stylesheet" href="style.css" />
 		<title>Battleship</title>
 	</head>
 	<body>
-		<div id="player-grid"></div>
+		<div class="play-grid-container">
+			<header class="play-grid-header">
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+				<div>7</div>
+				<div>8</div>
+				<div>9</div>
+				<div>10</div>
+			</header>
+			<aside class="play-grid-aside">
+				<div>A</div>
+				<div>B</div>
+				<div>C</div>
+				<div>D</div>
+				<div>E</div>
+				<div>F</div>
+				<div>G</div>
+				<div>H</div>
+				<div>I</div>
+				<div>J</div>
+			</aside>
+			<div class="play-card" id="player-grid"></div>
+		</div>
+		<div class="enemy-grid-container">
+			<header class="enemy-grid-header">
+				<div>1</div>
+				<div>2</div>
+				<div>3</div>
+				<div>4</div>
+				<div>5</div>
+				<div>6</div>
+				<div>7</div>
+				<div>8</div>
+				<div>9</div>
+				<div>10</div>
+			</header>
+			<aside class="enemy-grid-aside">
+				<div>A</div>
+				<div>B</div>
+				<div>C</div>
+				<div>D</div>
+				<div>E</div>
+				<div>F</div>
+				<div>G</div>
+				<div>H</div>
+				<div>I</div>
+				<div>J</div>
+			</aside>
+			<div class="enemy-card" id="enemy-grid"></div>
+		</div>
 	</body>
 </html>
