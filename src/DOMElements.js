@@ -1,0 +1,3 @@
+const HTML = () => {
+	const main = {};
+};
