@@ -1,15 +1,17 @@
 const Ship = (obj) => {
 	const name = obj.name;
-	const length = obj.size;
+	const size = obj.size;
 	const placement = [];
 	const hits = [];
 
+	//if ship is hit, store hit in Hhits array
 	const hit = (input) => {
 		hits.push(input);
 	};
 
+	//check if hits is equal to size
 	const isSunk = () => {
-		if (length === hits.length) {
+		if (size === hits.length) {
 			return true;
 		} else {
 			return false;
@@ -18,7 +20,7 @@ const Ship = (obj) => {
 
 	return {
 		name,
-		length,
+		size,
 		placement,
 		hits,
 		hit,
