@@ -28,6 +28,7 @@ const Gameboard = () => {
 		},
 	];
 
+	//set up a 10X10 play grid Array that is A - J and 1 - 10
 	const init = () => {
 		for (let i = 0; i < 100; i++) {
 			if (i < 10) {
@@ -55,6 +56,7 @@ const Gameboard = () => {
 		return;
 	};
 
+	//places a ship based on player input, and stores the placed ships in placedShips
 	const place = (coordinates, shipName, direction) => {
 		let selectedShip = shipKeys.find((ship) => ship.name === shipName);
 		selectedShip = Ship(shipKeys.shipName.size);
@@ -71,42 +73,53 @@ const Gameboard = () => {
 		}
 	};
 
+	//checks an incomming attack to see if it hits a ship or not
+	//if it is a hit will save that on the ship
 	const receiveAttack = (coordinates) => {
 		if (
-			shotsMissed.find(coordinates) === true ||
-			shotsHit.find(coordinates) === true
+			shotsMissed.includes(coordinates) === true ||
+			shotsHit.includes(coordinates) === true
 		) {
 			return;
 		} else if (isHit(coordinates) === true) {
-			shotsHit.push(coordinates);
-			let hitShip = findHitShip();
-			hitShip.hit(coordinates);
-			if (hitShip.isSunk() === true) {
-				console.log(`Enomy ${hitShip.name} has been sunk!`);
-				//checkWin()
-			}
+			console.log("Hit");
+			handleHit(coordinates);
 			return;
 		} else {
+			console.log("miss");
 			shotsMissed.push(coordinates);
 		}
 	};
 
-	function isHit(selectedSquare) {
+	let foundShip;
+
+	function isHit(coordinates) {
 		let serchedShipPlacements;
 		for (let i = 0; i < placedShips.length; i++) {
 			serchedShipPlacements = placedShips[i].placement;
-			if (serchedShipPlacements.includes(selectedSquare)) {
-				console.log("hit");
+			if (serchedShipPlacements.includes(coordinates)) {
+				foundShip = placedShips[i];
 				return true;
 			}
+		}
+		return false;
+	}
+
+	function handleHit(coordinates) {
+		shotsHit.push(coordinates);
+		foundShip.hit(coordinates);
+		console.log(placedShips);
+		if (foundShip.isSunk() === true) {
+			console.log(`The Enemy has sunk your ${foundShip.name}`);
 		}
 		return;
 	}
 
 	return {
 		playGrid,
-		receiveAttack,
 		init,
+		place,
+		receiveAttack,
 	};
 };
 
