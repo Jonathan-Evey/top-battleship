@@ -1,0 +1,190 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-image: url("./luis-vidal-f5_rRxchjoU-unsplash.jpg");
+  background-color: rgba(0, 0, 0, 0.35);
+  background-blend-mode: multiply;
+  background-position: center;
+  background-size: cover;
+}
+
+header {
+  color: white;
+  display: flex;
+  justify-content: center;
+  height: 15vh;
+  padding: 2.5vh 0 2.5vh 0;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  max-width: 140vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 10px;
+  padding: 0 1.5vh 0 2.5vh;
+}
+
+.launch-controls-container {
+  width: 50vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.btn {
+  background: none;
+  color: crimson;
+  font-size: inherit;
+  font-weight: 700;
+  padding: 1rem 0.5rem;
+  border-radius: 50%;
+  border: 2px solid crimson;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.player-details,
+.enemy-details {
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.player-details {
+  flex: 2;
+  height: 82.5vh;
+  max-width: 80vh;
+  padding: 0 2.5vh 2.5vh 2.5vh;
+}
+
+.title-container {
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 5vh;
+  font-size: 1.5rem;
+  padding-left: 0.5rem;
+}
+
+.player-map,
+.enemy-map {
+  background-image: url("./james-eades-RVX2STx44UI-unsplash.jpg");
+  background-color: rgba(10, 11, 36, 0.85);
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+}
+
+.player-map {
+  height: 75vh;
+}
+
+.enemy-details {
+  flex: 1;
+  height: 82.5vh;
+  max-width: 55vh;
+  margin-left: 5vh;
+  padding: 0 2.5vh 2.5vh 2.5vh;
+}
+
+.enemy-map {
+  height: 50vh;
+  margin-bottom: 2.5vh;
+}
+
+.enemy-ships {
+  height: 22.5vh;
+  width: 100%;
+  padding: 0.5rem;
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.ship-row {
+  width: 96%;
+  height: 5vh;
+
+  display: flex;
+  justify-content: center;
+}
+
+.space,
+.ship {
+  height: 100%;
+  width: 5vh;
+}
+
+.ship-two {
+  height: 100%;
+  width: 10vh;
+}
+
+.ship,
+.ship-two {
+  background-color: darkgray;
+}
+
+/* Carrier */
+.row-one :nth-child(2) {
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+}
+
+.row-one :nth-child(6) {
+  border-top-right-radius: 10%;
+  border-bottom-right-radius: 10%;
+}
+
+/* Battleship */
+.row-two :nth-child(1) {
+  border-top-left-radius: 75%;
+  border-bottom-left-radius: 75%;
+}
+
+.row-two :nth-child(3) {
+  border-top-right-radius: 25%;
+  border-bottom-right-radius: 25%;
+}
+
+/* Destroyer */
+.row-three :nth-child(5) {
+  border-top-left-radius: 75%;
+  border-bottom-left-radius: 75%;
+}
+
+.row-three :nth-child(6) {
+  border-top-right-radius: 25%;
+  border-bottom-right-radius: 25%;
+}
+
+/* Submarine*/
+.row-three :nth-child(1) {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.row-three :nth-child(3) {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+/* Patrol Boat */
+.row-two :nth-child(5) {
+  border-top-left-radius: 75%;
+  border-bottom-left-radius: 75%;
+  border-top-right-radius: 25%;
+  border-bottom-right-radius: 25%;
+}
