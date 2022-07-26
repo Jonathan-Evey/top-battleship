@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: grey;
+}
+
+header {
+  height: 25%;
+}
+
+.title-conatiner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h2,
+.outline {
+  text-align: center;
+  font-size: 7rem;
+  font-family: Impact;
+  font-weight: 800;
+}
+
+h2 {
+  position: relative;
+  background: linear-gradient(
+    to top,
+    #ff8000,
+    #ff9900,
+    #ffff00,
+    #ff9900,
+    #ff4000,
+    #ff0000
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.outline {
+  position: absolute;
+  color: white;
+  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+    3px 3px 0 #000;
+  z-index: -2;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35%;
+}
+
+h4 {
+  text-align: center;
+}
+
+.game-options-card {
+  width: 75%;
+  border: 2px solid black;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
