@@ -118,6 +118,8 @@ const Gameboard = () => {
 
 	return {
 		playGrid,
+		shotsMissed,
+		shotsHit,
 		init,
 		place,
 		receiveAttack,
