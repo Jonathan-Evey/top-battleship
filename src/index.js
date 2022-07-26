@@ -4,36 +4,43 @@ import Gameboard from "./gameboard";
 import Player from "./player";
 import HTML from "./DOMElements";
 
-let playerOne = Gameboard();
-let playerTwo = Gameboard();
+let playerOne = {
+	details: Player(false),
+	board: Gameboard(),
+};
+let playerTwo = {
+	details: Player(false),
+	board: Gameboard(),
+};
 
 let currentPlayer;
 let enemyPlayer;
 
 function renderPlayfield() {
-	currentPlayer = playerOne;
-	enemyPlayer = playerTwo;
-	currentPlayer.playGrid.forEach((cell) => {
+	currentPlayer.board.playGrid.forEach((cell) => {
 		let cellDiv = document.createElement("div");
 		cellDiv.classList.add("cell");
 		cellDiv.innerText = cell;
 		HTML.main.playerGrid.appendChild(cellDiv);
 	});
-	enemyPlayer.playGrid.forEach((cell) => {
+	enemyPlayer.board.playGrid.forEach((cell) => {
 		let cellDiv = document.createElement("div");
-		if (enemyPlayer.shotsMissed.includes(cell) === true) {
+		if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
 			cellDiv.classList.add("miss");
 		}
-		if (enemyPlayer.shotsHit.includes(cell) === true) {
+		if (enemyPlayer.board.shotsHit.includes(cell) === true) {
 			cellDiv.classList.add("hit");
 		}
 		HTML.main.enemyGrid.appendChild(cellDiv);
 	});
 }
 
-function startGame() {}
+function startGame() {
+	playerOne.board.init();
+	playerTwo.board.init();
+	currentPlayer = playerOne;
+	enemyPlayer = playerTwo;
+	renderPlayfield();
+}
 
-playerOne.init();
-playerTwo.init();
-
-renderPlayfield();
+startGame();
