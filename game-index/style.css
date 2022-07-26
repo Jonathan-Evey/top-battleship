@@ -141,6 +141,11 @@ main {
 	outline: 1px solid rgba(255, 255, 255, 0.9);
 }
 
+.enemy-card div:hover {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.65);
+}
+
 .enemy-details {
 	flex: 1;
 	height: 82.5vh;
