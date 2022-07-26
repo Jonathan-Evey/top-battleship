@@ -4,8 +4,18 @@ const HTML = (function () {
 		enemyGrid: document.getElementById("enemy-grid"),
 	};
 
+	const btns = {
+		fireBtn: document.getElementById("fire-btn"),
+	};
+
+	const display = {
+		launchCoordinates: document.getElementById("coordinates-display"),
+	};
+
 	return {
 		main,
+		btns,
+		display,
 	};
 })();
 
