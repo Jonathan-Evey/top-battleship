@@ -43,18 +43,21 @@ function startGame() {
 	currentPlayer = playerOne;
 	enemyPlayer = playerTwo;
 	renderPlayfield();
-	creatListener();
+	creatListeners();
 }
 
 /// Set event listers on Enemy info Grid the when selected will
 /// update the launch missile display with the selected coordinates
-function creatListener() {
+function creatListeners() {
 	HTML.main.enemyGrid.addEventListener("click", (e) => {
 		if (e.target.classList.contains("cell")) {
 			updateLaunchDisplay(e);
 			removeSelectedCell();
 			updateSelectedCell(e);
 		}
+	});
+	HTML.btns.fireBtn.addEventListener("click", () => {
+		checkForCoordinates();
 	});
 }
 function updateLaunchDisplay(e) {
@@ -67,6 +70,16 @@ function removeSelectedCell() {
 	HTML.main.enemyGrid.childNodes.forEach((child) => {
 		child.classList.remove("selected");
 	});
+}
+
+function checkForCoordinates() {
+	if (HTML.display.launchCoordinates.innerText === "") {
+		return console.log("select a cell");
+	} else {
+		console.log("fire!");
+		let coordinates = HTML.display.launchCoordinates.innerText;
+		enemyPlayer.board.receiveAttack(coordinates);
+	}
 }
 
 startGame();
