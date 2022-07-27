@@ -125,6 +125,7 @@ main {
 .enemy-card div {
 	color: transparent;
 	user-select: none;
+	font-size: 0.005rem;
 }
 
 .play-card,
@@ -139,6 +140,10 @@ main {
 .play-card div,
 .enemy-card div {
 	outline: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.selected {
+	background-color: rgba(255, 255, 255, 0.65);
 }
 
 .enemy-card div:hover {
