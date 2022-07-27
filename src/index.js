@@ -2,7 +2,29 @@ import _ from "lodash";
 import Ship from "./ship";
 import Gameboard from "./gameboard";
 import Player from "./player";
-import HTML from "./DOMElements";
+import HTML, { ships } from "./DOMElements";
+const shipKeys = [
+	{
+		name: "carrier",
+		size: 5,
+	},
+	{
+		name: "battleship",
+		size: 4,
+	},
+	{
+		name: "destroyer",
+		size: 3,
+	},
+	{
+		name: "submarine",
+		size: 3,
+	},
+	{
+		name: "patrol",
+		size: 2,
+	},
+];
 
 let playerOne = {
 	details: Player(false),
@@ -16,37 +38,39 @@ let playerTwo = {
 let currentPlayer;
 let enemyPlayer;
 
-function renderPlayfield() {
-	currentPlayer.board.playGrid.forEach((cell) => {
-		let cellDiv = document.createElement("div");
-		cellDiv.classList.add("cell");
-		if (currentPlayer.board.shotsMissed.includes(cell) === true) {
-			cellDiv.classList.add("miss");
-		}
-		if (currentPlayer.board.shotsHit.includes(cell) === true) {
-			cellDiv.classList.add("hit");
-		}
-		cellDiv.innerText = cell;
-		HTML.main.playerGrid.appendChild(cellDiv);
-	});
-	enemyPlayer.board.playGrid.forEach((cell) => {
-		let cellDiv = document.createElement("div");
-		cellDiv.classList.add("cell");
-		if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
-			cellDiv.classList.add("miss");
-		}
-		if (enemyPlayer.board.shotsHit.includes(cell) === true) {
-			cellDiv.classList.add("hit");
-		}
-		cellDiv.innerText = cell;
-		HTML.main.enemyGrid.appendChild(cellDiv);
-	});
+function renderPlayfield(player) {
+	if (player === currentPlayer) {
+		currentPlayer.board.playGrid.forEach((cell) => {
+			let cellDiv = document.createElement("div");
+			cellDiv.classList.add("cell");
+			if (currentPlayer.board.shotsMissed.includes(cell) === true) {
+				cellDiv.classList.add("miss");
+			}
+			if (currentPlayer.board.shotsHit.includes(cell) === true) {
+				cellDiv.classList.add("hit");
+			}
+			cellDiv.innerText = cell;
+			HTML.main.playerGrid.appendChild(cellDiv);
+		});
+	}
+	if (player === enemyPlayer) {
+		enemyPlayer.board.playGrid.forEach((cell) => {
+			let cellDiv = document.createElement("div");
+			cellDiv.classList.add("cell");
+			if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
+				cellDiv.classList.add("miss");
+			}
+			if (enemyPlayer.board.shotsHit.includes(cell) === true) {
+				cellDiv.classList.add("hit");
+			}
+			cellDiv.innerText = cell;
+			HTML.main.enemyGrid.appendChild(cellDiv);
+		});
+	}
 }
 
 function startGame() {
-	playerOne.board.init();
 	playerTwo.board.init();
-	currentPlayer = playerOne;
 	enemyPlayer = playerTwo;
 	renderPlayfield();
 	creatListeners();
@@ -119,4 +143,71 @@ function clearElements(element) {
 	}
 }
 
-startGame();
+let selectedShip;
+
+function startPlacments() {
+	playerOne.board.init();
+	currentPlayer = playerOne;
+	renderPlayfield(currentPlayer);
+	shipPlacmentEventListeners();
+}
+
+function shipPlacmentEventListeners() {
+	HTML.ships.shipContainer.addEventListener("click", (e) => {
+		if (e.target.id === "ship") {
+			removeSelectedClass();
+			console.log(e.target.classList.value);
+			selectedShip = e.target.classList.value;
+			e.target.classList.add("selected");
+			addPlaceSelectedShipEvent();
+		}
+	});
+	HTML.main.playerGrid.childNodes.forEach((child) => {
+		if (child.classList.contains("cell")) {
+			child.addEventListener("mouseenter", (e) => {
+				console.log(selectedShip);
+				e.target.classList.add(selectedShip);
+			});
+			child.addEventListener("mouseleave", (e) => {
+				e.target.classList.remove(selectedShip);
+			});
+		}
+	});
+}
+
+function addPlaceSelectedShipEvent() {
+	HTML.main.playerGrid.childNodes.forEach((child) => {
+		if (child.classList.contains("cell")) {
+			child.addEventListener("click", (e) => {
+				e.target.classList.add(selectedShip);
+				let placeShip = shipKeys.find(
+					(ship) => ship.name === selectedShip
+				);
+				console.log(placeShip);
+				placeShip = Ship(placeShip);
+				console.log(placeShip);
+				let coordinates = e.target.innerText;
+				currentPlayer.board.place(coordinates, placeShip, "horizontal");
+				removePlaceSelectedShipEvent();
+			});
+		}
+	});
+}
+
+function removePlaceSelectedShipEvent() {
+	HTML.main.playerGrid.childNodes.forEach((child) => {
+		if (child.classList.contains("cell")) {
+			child.removeEventListener("click", () => {});
+		}
+	});
+}
+
+function removeSelectedClass() {
+	HTML.ships.shipContainer.childNodes.forEach((child) => {
+		if (child.id === "ship") {
+			child.classList.remove("selected");
+		}
+	});
+}
+
+startPlacments();
