@@ -4,6 +4,15 @@ const HTML = (function () {
 		enemyGrid: document.getElementById("enemy-grid"),
 	};
 
+	const ships = {
+		shipContainer: document.getElementById("ship-container"),
+		carrier: document.getElementById("carrier"),
+		battleship: document.getElementById("battleship"),
+		destroyer: document.getElementById("destroyer"),
+		submarine: document.getElementById("submarine"),
+		patrol: document.getElementById("patrol"),
+	};
+
 	const btns = {
 		fireBtn: document.getElementById("fire-btn"),
 	};
@@ -14,6 +23,7 @@ const HTML = (function () {
 
 	return {
 		main,
+		ships,
 		btns,
 		display,
 	};
