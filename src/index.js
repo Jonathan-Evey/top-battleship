@@ -20,6 +20,12 @@ function renderPlayfield() {
 	currentPlayer.board.playGrid.forEach((cell) => {
 		let cellDiv = document.createElement("div");
 		cellDiv.classList.add("cell");
+		if (currentPlayer.board.shotsMissed.includes(cell) === true) {
+			cellDiv.classList.add("miss");
+		}
+		if (currentPlayer.board.shotsHit.includes(cell) === true) {
+			cellDiv.classList.add("hit");
+		}
 		cellDiv.innerText = cell;
 		HTML.main.playerGrid.appendChild(cellDiv);
 	});
@@ -50,6 +56,12 @@ function startGame() {
 /// update the launch missile display with the selected coordinates
 function creatListeners() {
 	HTML.main.enemyGrid.addEventListener("click", (e) => {
+		if (
+			e.target.classList.contains("hit") ||
+			e.target.classList.contains("miss")
+		) {
+			return console.log("cannot select");
+		}
 		if (e.target.classList.contains("cell")) {
 			updateLaunchDisplay(e);
 			removeSelectedCell();
@@ -78,7 +90,32 @@ function checkForCoordinates() {
 	} else {
 		console.log("fire!");
 		let coordinates = HTML.display.launchCoordinates.innerText;
+		HTML.display.launchCoordinates.innerText = "";
 		enemyPlayer.board.receiveAttack(coordinates);
+		switchPlayerTurn();
+	}
+}
+
+function switchPlayerTurn() {
+	clearElements(HTML.main.playerGrid);
+	clearElements(HTML.main.enemyGrid);
+	if (currentPlayer === playerOne) {
+		currentPlayer = playerTwo;
+		enemyPlayer = playerOne;
+		renderPlayfield();
+		return;
+	}
+	if (currentPlayer === playerTwo) {
+		currentPlayer = playerOne;
+		enemyPlayer = playerTwo;
+		renderPlayfield();
+		return;
+	}
+}
+
+function clearElements(element) {
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
 	}
 }
 
