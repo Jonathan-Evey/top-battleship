@@ -5,29 +5,6 @@ const Gameboard = () => {
 	const placedShips = [];
 	const sunkShips = [];
 
-	const shipKeys = [
-		{
-			name: "Carrier",
-			size: 5,
-		},
-		{
-			name: "Battleship",
-			size: 4,
-		},
-		{
-			name: "Destroyer",
-			size: 3,
-		},
-		{
-			name: "Submarine",
-			size: 3,
-		},
-		{
-			name: "Patrol Boat",
-			size: 2,
-		},
-	];
-
 	//set up a 10X10 play grid Array that is A - J and 1 - 10
 	const init = () => {
 		for (let i = 0; i < 100; i++) {
@@ -58,20 +35,23 @@ const Gameboard = () => {
 	};
 
 	//places a ship based on player input, and stores the placed ships in placedShips
-	const place = (coordinates, shipName, direction) => {
-		let selectedShip = shipKeys.find((ship) => ship.name === shipName);
-		selectedShip = Ship(shipKeys.shipName.size);
-		if (direction === horizontal) {
-			let selectedCoordinatesIndex = playGrid.findIndex(
-				cell === coordinates
-			);
-			for (let i = 0; i < shipBeingPlaced.length; i++) {
+	const place = (coordinates, ship, direction) => {
+		console.log(coordinates.toString());
+		console.log(ship);
+		console.log(direction);
+		let shipBeingPlaced = ship;
+		if (direction === "horizontal") {
+			let selectedCoordinatesIndex = playGrid.indexOf(coordinates);
+			console.log(selectedCoordinatesIndex);
+			for (let i = 0; i < shipBeingPlaced.size; i++) {
 				shipBeingPlaced.placement.push(
 					playGrid[selectedCoordinatesIndex + i]
 				);
 			}
+			console.log(shipBeingPlaced.placement);
 			placedShips.push(shipBeingPlaced);
 		}
+		console.log(placedShips);
 	};
 
 	//checks an incomming attack to see if it hits a ship or not
@@ -96,7 +76,7 @@ const Gameboard = () => {
 
 	function isHit(coordinates) {
 		let serchedShipPlacements;
-		for (let i = 0; i < placedShips.length; i++) {
+		for (let i = 0; i < placedShips.size; i++) {
 			serchedShipPlacements = placedShips[i].placement;
 			if (serchedShipPlacements.includes(coordinates)) {
 				foundShip = placedShips[i];
