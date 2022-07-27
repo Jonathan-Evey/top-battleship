@@ -187,37 +187,52 @@ main {
 	cursor: pointer;
 }
 
+.ship-container div.selected {
+	border: 2px solid black;
+	background-color: rgb(68, 68, 68);
+}
+
 /* Carrier */
-.ship-container :nth-child(1) {
+.ship-container div.carrier {
 	grid-area: carrier;
+}
+.carrier {
 	width: 500%;
 	border-radius: 10px;
 }
 
 /* Battleship */
-.ship-container :nth-child(2) {
+.ship-container div.battleship {
 	grid-area: battleship;
+}
+.battleship {
 	width: 400%;
 	border-radius: 50% 10% 10% 50% / 75% 25% 25% 75%;
 }
 
 /* Destroyer */
-.ship-container :nth-child(3) {
+.ship-container div.destroyer {
 	grid-area: destroyer;
+}
+.destroyer {
 	width: 300%;
 	border-radius: 60% 10% 10% 60% / 75% 25% 25% 75%;
 }
 
 /* Submarine*/
-.ship-container :nth-child(4) {
+.ship-container div.submarine {
 	grid-area: submarine;
+}
+.submarine {
 	width: 300%;
 	border-radius: 20% / 50%;
 }
 
 /* Patrol Boat */
-.ship-container :nth-child(5) {
+.ship-container div.patrol {
 	grid-area: patrol;
+}
+.patrol {
 	width: 200%;
 	border-radius: 75% 25% 25% 75%;
 }
