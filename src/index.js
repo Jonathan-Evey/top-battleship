@@ -25,12 +25,14 @@ function renderPlayfield() {
 	});
 	enemyPlayer.board.playGrid.forEach((cell) => {
 		let cellDiv = document.createElement("div");
+		cellDiv.classList.add("cell");
 		if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
 			cellDiv.classList.add("miss");
 		}
 		if (enemyPlayer.board.shotsHit.includes(cell) === true) {
 			cellDiv.classList.add("hit");
 		}
+		cellDiv.innerText = cell;
 		HTML.main.enemyGrid.appendChild(cellDiv);
 	});
 }
@@ -41,6 +43,30 @@ function startGame() {
 	currentPlayer = playerOne;
 	enemyPlayer = playerTwo;
 	renderPlayfield();
+	creatListener();
+}
+
+/// Set event listers on Enemy info Grid the when selected will
+/// update the launch missile display with the selected coordinates
+function creatListener() {
+	HTML.main.enemyGrid.addEventListener("click", (e) => {
+		if (e.target.classList.contains("cell")) {
+			updateLaunchDisplay(e);
+			removeSelectedCell();
+			updateSelectedCell(e);
+		}
+	});
+}
+function updateLaunchDisplay(e) {
+	HTML.display.launchCoordinates.innerText = e.target.innerText;
+}
+function updateSelectedCell(e) {
+	e.target.classList.add("selected");
+}
+function removeSelectedCell() {
+	HTML.main.enemyGrid.childNodes.forEach((child) => {
+		child.classList.remove("selected");
+	});
 }
 
 startGame();
