@@ -242,8 +242,18 @@ main {
 .ship-container div {
 	background-color: darkgray;
 }
+
+.ship-container div.placed {
+	background-color: transparent;
+	border: 2px solid rgba(255, 255, 255, 0.75);
+}
+
 .ship-container div:hover {
 	cursor: pointer;
+}
+
+.ship-container div.placed:hover {
+	cursor: default;
 }
 
 .ship-container div.selected {
