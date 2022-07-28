@@ -11,14 +11,16 @@ function init() {
 	});
 	HTML.btns.startGame.addEventListener("click", () => {
 		playerName = HTML.userInputs.input.value;
-		clearElements(HTML.main.HTMLBODY);
+		clearElements(HTML.startingElements.HTMLBODY);
 		renderShipPlacementHTML();
 		initPlayers();
+		startPlacments();
 	});
 }
 
 function renderShipPlacementHTML() {
-	HTML.main.HTMLBODY.innerHTML = HTML.placeShipHTMLIndex.HTMLTemplate;
+	HTML.startingElements.HTMLBODY.innerHTML =
+		HTML.placeShipHTMLIndex.HTMLTemplate;
 }
 
 let playerOne;
@@ -34,6 +36,19 @@ function initPlayers() {
 		board: Gameboard(),
 	};
 	console.log(playerTwo);
+}
+
+let placeShipHTML;
+
+let currentPlayer;
+let enemyPlayer;
+function startPlacments() {
+	placeShipHTML = HTML.placeShipElements();
+	console.log(placeShipHTML);
+	playerOne.board.init();
+	currentPlayer = playerOne;
+	renderPlayfield(currentPlayer);
+	shipSelectEventListener();
 }
 
 const shipKeys = [
@@ -59,9 +74,6 @@ const shipKeys = [
 	},
 ];
 
-let currentPlayer;
-let enemyPlayer;
-
 function renderPlayfield(player) {
 	if (player === currentPlayer) {
 		currentPlayer.board.playGrid.forEach((cell) => {
@@ -74,7 +86,7 @@ function renderPlayfield(player) {
 				cellDiv.classList.add("hit");
 			}
 			cellDiv.innerText = cell;
-			HTML.main.playerGrid.appendChild(cellDiv);
+			placeShipHTML.playerGrid.appendChild(cellDiv);
 		});
 	}
 	if (player === enemyPlayer) {
@@ -88,7 +100,7 @@ function renderPlayfield(player) {
 				cellDiv.classList.add("hit");
 			}
 			cellDiv.innerText = cell;
-			HTML.main.enemyGrid.appendChild(cellDiv);
+			placeShipHTML.enemyGrid.appendChild(cellDiv);
 		});
 	}
 }
@@ -169,65 +181,133 @@ function clearElements(element) {
 
 let selectedShip;
 
-function startPlacments() {
-	playerOne.board.init();
-	currentPlayer = playerOne;
-	renderPlayfield(currentPlayer);
-	shipPlacmentEventListeners();
+function shipSelectEventListener() {
+	placeShipHTML.shipContainer.addEventListener("click", shipPicked);
 }
 
-function shipPlacmentEventListeners() {
-	HTML.ships.shipContainer.addEventListener("click", (e) => {
-		if (e.target.id === "ship") {
-			removeSelectedClass();
-			console.log(e.target.classList.value);
-			selectedShip = e.target.classList.value;
-			e.target.classList.add("selected");
-			addPlaceSelectedShipEvent();
-		}
-	});
-	HTML.main.playerGrid.childNodes.forEach((child) => {
+function shipPicked(e) {
+	if (e.target.id === "ship") {
+		removeSelectedClass();
+		console.log(e.target.classList.value);
+		selectedShip = e.target.classList.value;
+		e.target.classList.add("selected");
+		gridEventListeners();
+	}
+}
+
+let direction = "horizontal";
+
+function gridEventListeners() {
+	if (direction === "horizontal") {
+		horizontalEvents();
+	}
+	if (direction === "vertical") {
+	}
+}
+
+function horizontalEvents() {
+	let placeShip = shipKeys.find((ship) => ship.name === selectedShip);
+	console.log(placeShip.size);
+	let count;
+	count = 0;
+	placeShipHTML.playerGrid.childNodes.forEach((child) => {
 		if (child.classList.contains("cell")) {
-			child.addEventListener("mouseenter", (e) => {
-				console.log(selectedShip);
-				e.target.classList.add(selectedShip);
-			});
-			child.addEventListener("mouseleave", (e) => {
-				e.target.classList.remove(selectedShip);
-			});
+			if (count < 10 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 10 && count < 20 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 20 && count < 30 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 30 && count < 40 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 40 && count < 50 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 50 && count < 60 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 60 && count < 70 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 70 && count < 80 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else if (count >= 80 && count < 90 - placeShip.size + 1) {
+				addMouseEnterEvent(child);
+				addMouseLeaveEvent(child);
+				addGridClickEventsListeners(child);
+			} else {
+				if (count >= 90 && count < 100 - placeShip.size + 1) {
+					addMouseEnterEvent(child);
+					addMouseLeaveEvent(child);
+					addGridClickEventsListeners(child);
+				}
+			}
+			count++;
 		}
 	});
 }
 
-function addPlaceSelectedShipEvent() {
-	HTML.main.playerGrid.childNodes.forEach((child) => {
+function addGridClickEventsListeners(element) {
+	element.addEventListener("click", placeShip);
+}
+
+function removeGridClickEventsListeners() {
+	placeShipHTML.playerGrid.childNodes.forEach((child) => {
 		if (child.classList.contains("cell")) {
-			child.addEventListener("click", (e) => {
-				e.target.classList.add(selectedShip);
-				let placeShip = shipKeys.find(
-					(ship) => ship.name === selectedShip
-				);
-				console.log(placeShip);
-				placeShip = Ship(placeShip);
-				console.log(placeShip);
-				let coordinates = e.target.innerText;
-				currentPlayer.board.place(coordinates, placeShip, "horizontal");
-				removePlaceSelectedShipEvent();
-			});
+			child.removeEventListener("click", placeShip);
 		}
 	});
 }
 
-function removePlaceSelectedShipEvent() {
-	HTML.main.playerGrid.childNodes.forEach((child) => {
+function placeShip(e) {
+	removeAllMouseEvenets();
+	removeGridClickEventsListeners();
+	e.target.classList.add(selectedShip);
+	let placeShip = shipKeys.find((ship) => ship.name === selectedShip);
+	console.log(placeShip);
+	placeShip = Ship(placeShip);
+	console.log(placeShip);
+	let coordinates = e.target.innerText;
+	currentPlayer.board.place(coordinates, placeShip, direction);
+}
+
+function addShipClass(e) {
+	e.target.classList.add(selectedShip);
+}
+function removeShipClass(e) {
+	e.target.classList.remove(selectedShip);
+}
+function addMouseEnterEvent(element) {
+	element.addEventListener("mouseenter", addShipClass);
+}
+function addMouseLeaveEvent(element) {
+	element.addEventListener("mouseleave", removeShipClass);
+}
+
+function removeAllMouseEvenets() {
+	placeShipHTML.playerGrid.childNodes.forEach((child) => {
 		if (child.classList.contains("cell")) {
-			child.removeEventListener("click", () => {});
+			child.removeEventListener("mouseleave", removeShipClass);
+			child.removeEventListener("mouseenter", addShipClass);
 		}
 	});
 }
 
 function removeSelectedClass() {
-	HTML.ships.shipContainer.childNodes.forEach((child) => {
+	placeShipHTML.shipContainer.childNodes.forEach((child) => {
 		if (child.id === "ship") {
 			child.classList.remove("selected");
 		}
