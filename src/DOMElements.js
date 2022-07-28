@@ -1,9 +1,7 @@
 const HTML = (function () {
-	const main = {
+	const startingElements = {
 		HTMLHEAD: document.head,
 		HTMLBODY: document.body,
-		playerGrid: document.getElementById("player-grid"),
-		enemyGrid: document.getElementById("enemy-grid"),
 	};
 
 	const userInputs = {
@@ -11,13 +9,18 @@ const HTML = (function () {
 		input: document.getElementById("user-name"),
 	};
 
-	const ships = {
-		shipContainer: document.getElementById("ship-container"),
-		carrier: document.getElementById("carrier"),
-		battleship: document.getElementById("battleship"),
-		destroyer: document.getElementById("destroyer"),
-		submarine: document.getElementById("submarine"),
-		patrol: document.getElementById("patrol"),
+	const placeShipElements = () => {
+		return (placeShipHTML = {
+			playerGrid: document.getElementById("player-grid"),
+			enemyGrid: document.getElementById("enemy-grid"),
+
+			shipContainer: document.getElementById("ship-container"),
+			carrier: document.getElementById("carrier"),
+			battleship: document.getElementById("battleship"),
+			destroyer: document.getElementById("destroyer"),
+			submarine: document.getElementById("submarine"),
+			patrol: document.getElementById("patrol"),
+		});
 	};
 
 	const btns = {
@@ -67,108 +70,6 @@ const HTML = (function () {
 					<div>I</div>
 					<div>J</div>
 				</div>
-				<div class="ship-play-card">
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
 				<div class="play-card" id="player-grid"></div>
 			</div>
 		</section>
@@ -194,8 +95,8 @@ const HTML = (function () {
 	};
 
 	return {
-		main,
-		ships,
+		startingElements,
+		placeShipElements,
 		userInputs,
 		btns,
 		display,
