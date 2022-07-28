@@ -3,6 +3,39 @@ import Ship from "./ship";
 import Gameboard from "./gameboard";
 import Player from "./player";
 import HTML, { ships } from "./DOMElements";
+
+let playerName;
+function init() {
+	HTML.userInputs.form.addEventListener("submit", (e) => {
+		e.preventDefault();
+	});
+	HTML.btns.startGame.addEventListener("click", () => {
+		playerName = HTML.userInputs.input.value;
+		clearElements(HTML.main.HTMLBODY);
+		renderShipPlacementHTML();
+		initPlayers();
+	});
+}
+
+function renderShipPlacementHTML() {
+	HTML.main.HTMLBODY.innerHTML = HTML.placeShipHTMLIndex.HTMLTemplate;
+}
+
+let playerOne;
+let playerTwo;
+function initPlayers() {
+	playerOne = {
+		details: Player(false, playerName),
+		board: Gameboard(),
+	};
+	console.log(playerOne);
+	playerTwo = {
+		details: Player(false),
+		board: Gameboard(),
+	};
+	console.log(playerTwo);
+}
+
 const shipKeys = [
 	{
 		name: "carrier",
@@ -25,15 +58,6 @@ const shipKeys = [
 		size: 2,
 	},
 ];
-
-let playerOne = {
-	details: Player(false),
-	board: Gameboard(),
-};
-let playerTwo = {
-	details: Player(false),
-	board: Gameboard(),
-};
 
 let currentPlayer;
 let enemyPlayer;
@@ -210,4 +234,4 @@ function removeSelectedClass() {
 	});
 }
 
-startPlacments();
+init();
