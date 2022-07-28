@@ -14,13 +14,21 @@ function init() {
 		clearElements(HTML.startingElements.HTMLBODY);
 		renderShipPlacementHTML();
 		initPlayers();
-		startPlacments();
+		startPlacments(playerOne);
 	});
 }
 
 function renderShipPlacementHTML() {
 	HTML.startingElements.HTMLBODY.innerHTML =
 		HTML.placeShipHTMLIndex.HTMLTemplate;
+}
+
+let gamePlayHTML;
+
+function renderGamePlayHTML() {
+	HTML.startingElements.HTMLBODY.innerHTML =
+		HTML.gamePlayHTMLIndex.HTMLTemplate;
+	gamePlayHTML = HTML.gamePlayElements();
 }
 
 let playerOne;
@@ -42,12 +50,13 @@ let placeShipHTML;
 
 let currentPlayer;
 let enemyPlayer;
-function startPlacments() {
+
+function startPlacments(playerData) {
 	placeShipHTML = HTML.placeShipElements();
 	console.log(placeShipHTML);
-	playerOne.board.init();
-	currentPlayer = playerOne;
-	renderPlayfield(currentPlayer);
+	playerData.board.init();
+	currentPlayer = playerData;
+	renderShipPlacementGrid();
 	shipSelectEventListener();
 }
 
@@ -74,48 +83,63 @@ const shipKeys = [
 	},
 ];
 
-function renderPlayfield(player) {
-	if (player === currentPlayer) {
-		currentPlayer.board.playGrid.forEach((cell) => {
-			let cellDiv = document.createElement("div");
-			cellDiv.classList.add("cell");
-			if (currentPlayer.board.shotsMissed.includes(cell) === true) {
-				cellDiv.classList.add("miss");
-			}
-			if (currentPlayer.board.shotsHit.includes(cell) === true) {
-				cellDiv.classList.add("hit");
-			}
-			cellDiv.innerText = cell;
-			placeShipHTML.playerGrid.appendChild(cellDiv);
-		});
-	}
-	if (player === enemyPlayer) {
-		enemyPlayer.board.playGrid.forEach((cell) => {
-			let cellDiv = document.createElement("div");
-			cellDiv.classList.add("cell");
-			if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
-				cellDiv.classList.add("miss");
-			}
-			if (enemyPlayer.board.shotsHit.includes(cell) === true) {
-				cellDiv.classList.add("hit");
-			}
-			cellDiv.innerText = cell;
-			placeShipHTML.enemyGrid.appendChild(cellDiv);
-		});
-	}
+function renderShipPlacementGrid() {
+	currentPlayer.board.playGrid.forEach((cell) => {
+		let cellDiv = document.createElement("div");
+		cellDiv.classList.add("cell");
+		if (currentPlayer.board.shotsMissed.includes(cell) === true) {
+			cellDiv.classList.add("miss");
+		}
+		if (currentPlayer.board.shotsHit.includes(cell) === true) {
+			cellDiv.classList.add("hit");
+		}
+		cellDiv.innerText = cell;
+		placeShipHTML.playerGrid.appendChild(cellDiv);
+	});
+}
+
+function renderCurrentPlayerBoard() {
+	currentPlayer.board.playGrid.forEach((cell) => {
+		let cellDiv = document.createElement("div");
+		cellDiv.classList.add("cell");
+		if (currentPlayer.board.shotsMissed.includes(cell) === true) {
+			cellDiv.classList.add("miss");
+		}
+		if (currentPlayer.board.shotsHit.includes(cell) === true) {
+			cellDiv.classList.add("hit");
+		}
+		cellDiv.innerText = cell;
+		gamePlayHTML.playerGrid.appendChild(cellDiv);
+	});
+}
+
+function renderEnemyPlayerBoard() {
+	enemyPlayer.board.playGrid.forEach((cell) => {
+		let cellDiv = document.createElement("div");
+		cellDiv.classList.add("cell");
+		if (enemyPlayer.board.shotsMissed.includes(cell) === true) {
+			cellDiv.classList.add("miss");
+		}
+		if (enemyPlayer.board.shotsHit.includes(cell) === true) {
+			cellDiv.classList.add("hit");
+		}
+		cellDiv.innerText = cell;
+		gamePlayHTML.enemyGrid.appendChild(cellDiv);
+	});
 }
 
 function startGame() {
-	playerTwo.board.init();
+	currentPlayer = playerOne;
 	enemyPlayer = playerTwo;
-	renderPlayfield();
+	renderCurrentPlayerBoard();
+	renderEnemyPlayerBoard();
 	creatListeners();
 }
 
 /// Set event listers on Enemy info Grid the when selected will
 /// update the launch missile display with the selected coordinates
 function creatListeners() {
-	HTML.main.enemyGrid.addEventListener("click", (e) => {
+	gamePlayHTML.enemyGrid.addEventListener("click", (e) => {
 		if (
 			e.target.classList.contains("hit") ||
 			e.target.classList.contains("miss")
@@ -128,47 +152,49 @@ function creatListeners() {
 			updateSelectedCell(e);
 		}
 	});
-	HTML.btns.fireBtn.addEventListener("click", () => {
+	gamePlayHTML.fireBtn.addEventListener("click", () => {
 		checkForCoordinates();
 	});
 }
 function updateLaunchDisplay(e) {
-	HTML.display.launchCoordinates.innerText = e.target.innerText;
+	gamePlayHTML.launchCoordinates.innerText = e.target.innerText;
 }
 function updateSelectedCell(e) {
 	e.target.classList.add("selected");
 }
 function removeSelectedCell() {
-	HTML.main.enemyGrid.childNodes.forEach((child) => {
+	gamePlayHTML.enemyGrid.childNodes.forEach((child) => {
 		child.classList.remove("selected");
 	});
 }
 
 function checkForCoordinates() {
-	if (HTML.display.launchCoordinates.innerText === "") {
+	if (gamePlayHTML.launchCoordinates.innerText === "") {
 		return console.log("select a cell");
 	} else {
 		console.log("fire!");
-		let coordinates = HTML.display.launchCoordinates.innerText;
-		HTML.display.launchCoordinates.innerText = "";
+		let coordinates = gamePlayHTML.launchCoordinates.innerText;
+		gamePlayHTML.launchCoordinates.innerText = "";
 		enemyPlayer.board.receiveAttack(coordinates);
 		switchPlayerTurn();
 	}
 }
 
 function switchPlayerTurn() {
-	clearElements(HTML.main.playerGrid);
-	clearElements(HTML.main.enemyGrid);
+	clearElements(gamePlayHTML.playerGrid);
+	clearElements(gamePlayHTML.enemyGrid);
 	if (currentPlayer === playerOne) {
 		currentPlayer = playerTwo;
 		enemyPlayer = playerOne;
-		renderPlayfield();
+		renderCurrentPlayerBoard();
+		renderEnemyPlayerBoard();
 		return;
 	}
 	if (currentPlayer === playerTwo) {
 		currentPlayer = playerOne;
 		enemyPlayer = playerTwo;
-		renderPlayfield();
+		renderCurrentPlayerBoard();
+		renderEnemyPlayerBoard();
 		return;
 	}
 }
@@ -182,11 +208,17 @@ function clearElements(element) {
 let selectedShip;
 
 function shipSelectEventListener() {
+	placeShipHTML.shipContainer.removeEventListener("click", shipPicked);
 	placeShipHTML.shipContainer.addEventListener("click", shipPicked);
 }
 
+let shipNode;
 function shipPicked(e) {
-	if (e.target.id === "ship") {
+	if (
+		e.target.id === "ship" &&
+		e.target.classList.contains("placed") !== true
+	) {
+		shipNode = e.target;
 		removeSelectedClass();
 		console.log(e.target.classList.value);
 		selectedShip = e.target.classList.value;
@@ -275,6 +307,8 @@ function removeGridClickEventsListeners() {
 function placeShip(e) {
 	removeAllMouseEvenets();
 	removeGridClickEventsListeners();
+	shipNode.classList.add("placed");
+	shipNode.classList.remove("selected");
 	e.target.classList.add(selectedShip);
 	let placeShip = shipKeys.find((ship) => ship.name === selectedShip);
 	console.log(placeShip);
@@ -282,6 +316,7 @@ function placeShip(e) {
 	console.log(placeShip);
 	let coordinates = e.target.innerText;
 	currentPlayer.board.place(coordinates, placeShip, direction);
+	checkForGameStart();
 }
 
 function addShipClass(e) {
@@ -312,6 +347,26 @@ function removeSelectedClass() {
 			child.classList.remove("selected");
 		}
 	});
+}
+
+function checkForGameStart() {
+	if (
+		currentPlayer.board.isAllShipsPlaced() === true &&
+		currentPlayer === playerOne
+	) {
+		clearElements(HTML.startingElements.HTMLBODY);
+		renderShipPlacementHTML();
+		startPlacments(playerTwo);
+	} else if (
+		currentPlayer.board.isAllShipsPlaced() === true &&
+		currentPlayer === playerTwo
+	) {
+		clearElements(HTML.startingElements.HTMLBODY);
+		renderGamePlayHTML();
+		startGame();
+	} else {
+		return;
+	}
 }
 
 init();
