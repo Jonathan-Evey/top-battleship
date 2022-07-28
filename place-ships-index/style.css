@@ -197,6 +197,7 @@ main {
 	grid-area: carrier;
 }
 .carrier {
+	background-color: rgb(68, 68, 68);
 	width: 500%;
 	border-radius: 10px;
 }
@@ -206,6 +207,7 @@ main {
 	grid-area: battleship;
 }
 .battleship {
+	background-color: rgb(68, 68, 68);
 	width: 400%;
 	border-radius: 50% 10% 10% 50% / 75% 25% 25% 75%;
 }
@@ -215,6 +217,7 @@ main {
 	grid-area: destroyer;
 }
 .destroyer {
+	background-color: rgb(68, 68, 68);
 	width: 300%;
 	border-radius: 60% 10% 10% 60% / 75% 25% 25% 75%;
 }
@@ -224,6 +227,7 @@ main {
 	grid-area: submarine;
 }
 .submarine {
+	background-color: rgb(68, 68, 68);
 	width: 300%;
 	border-radius: 20% / 50%;
 }
@@ -233,6 +237,7 @@ main {
 	grid-area: patrol;
 }
 .patrol {
+	background-color: rgb(68, 68, 68);
 	width: 200%;
 	border-radius: 75% 25% 25% 75%;
 }
