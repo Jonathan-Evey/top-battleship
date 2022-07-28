@@ -1,75 +1,302 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  height: 100vh;
-  width: 100vw;
-  background-color: grey;
-}
-
-header {
-  height: 25%;
+	height: 100vh;
+	width: 100vw;
 }
 
 .title-conatiner {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 h2,
 .outline {
-  text-align: center;
-  font-size: 7rem;
-  font-family: Impact;
-  font-weight: 800;
+	text-align: center;
+	font-size: 7rem;
+	font-family: Impact;
+	font-weight: 800;
 }
 
 h2 {
-  position: relative;
-  background: linear-gradient(
-    to top,
-    #ff8000,
-    #ff9900,
-    #ffff00,
-    #ff9900,
-    #ff4000,
-    #ff0000
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	position: relative;
+	background: linear-gradient(
+		to top,
+		#ff8000,
+		#ff9900,
+		#ffff00,
+		#ff9900,
+		#ff4000,
+		#ff0000
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .outline {
-  position: absolute;
-  color: white;
-  text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
-    3px 3px 0 #000;
-  z-index: -2;
-}
-
-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 35%;
+	position: absolute;
+	color: white;
+	text-shadow: -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000,
+		3px 3px 0 #000;
+	z-index: -2;
 }
 
 h4 {
-  text-align: center;
+	text-align: center;
 }
 
 .game-options-card {
-  width: 75%;
-  border: 2px solid black;
+	width: 75%;
+	border: 2px solid black;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
+}
+
+body {
+	background-image: url("./luis-vidal-f5_rRxchjoU-unsplash.jpg");
+	background-color: rgba(0, 0, 0, 0.35);
+	background-blend-mode: multiply;
+	background-position: center;
+	background-size: cover;
+}
+
+header {
+	color: white;
+	display: flex;
+	justify-content: center;
+	height: 15vh;
+	padding: 2.5vh 0 2.5vh 0;
+}
+
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1;
+	max-width: 140vh;
+	background-color: rgba(0, 0, 0, 0.85);
+	border-radius: 10px;
+	padding: 0 1.5vh 0 2.5vh;
+}
+
+.launch-controls-container {
+	width: 50vh;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 1.35rem;
+	font-weight: 700;
+}
+
+.btn {
+	background: none;
+	color: crimson;
+	font-size: inherit;
+	font-weight: 700;
+	padding: 1rem 0.5rem;
+	border-radius: 50%;
+	border: 2px solid crimson;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+}
+
+.player-details,
+.enemy-details {
+	border-radius: 20px;
+	background-color: rgba(0, 0, 0, 0.85);
+}
+
+.player-details {
+	flex: 2;
+	height: 82.5vh;
+	max-width: 80vh;
+	padding: 0 2.5vh 2.5vh 2.5vh;
+}
+
+.title-container {
+	color: white;
+	display: flex;
+	align-items: center;
+	height: 5vh;
+	font-size: 1.5rem;
+	padding-left: 0.5rem;
+}
+
+.player-container,
+.enemy-container {
+	background-image: url("./james-eades-RVX2STx44UI-unsplash.jpg");
+	background-color: rgba(10, 11, 36, 0.85);
+	background-blend-mode: multiply;
+	background-size: cover;
+	background-position: center;
+
+	display: grid;
+	grid-template-areas:
+		". header"
+		"aside play-card";
+	grid-template-columns: 1fr 10fr;
+	grid-template-rows: 1fr 10fr;
+}
+
+.player-container {
+	height: 75vh;
+}
+
+.map-header {
+	grid-area: header;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+}
+
+.map-aside {
+	grid-area: aside;
+	display: grid;
+	grid-template-columns: 1;
+	grid-template-rows: repeat(10, 1fr);
+}
+
+.map-header div,
+.map-aside div,
+.play-card div,
+.enemy-card div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 1.1rem;
+}
+
+.play-card div,
+.enemy-card div {
+	color: transparent;
+	user-select: none;
+}
+
+.ship-play-card,
+.play-card,
+.enemy-card {
+	grid-area: play-card;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	outline: 2px solid rgba(255, 255, 255, 0.9);
+	margin-right: 2px;
+}
+
+.play-card div,
+.enemy-card div {
+	outline: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.enemy-details {
+	flex: 1;
+	height: 82.5vh;
+	max-width: 55vh;
+	margin-left: 5vh;
+	padding: 0 2.5vh 2.5vh 2.5vh;
+}
+
+.enemy-container {
+	height: 50vh;
+	margin-bottom: 2.5vh;
+}
+
+.ship-yard-controls-container {
+	height: 50vh;
+	margin-bottom: 2.5vh;
+}
+
+.ship-container {
+	height: 22.5vh;
+	width: 100%;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	background-image: url("./james-eades-RVX2STx44UI-unsplash.jpg");
+	background-color: rgba(10, 11, 36, 0.85);
+	background-blend-mode: multiply;
+	background-size: cover;
+	background-position: center;
+	display: grid;
+	grid-template-areas:
+		". carrier . . . . ."
+		"battleship . . . . patrol . "
+		"submarine . . . destroyer . . ";
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	gap: 0.75rem 0;
+}
+
+.ship-container div {
+	background-color: darkgray;
+}
+.ship-container div:hover {
+	cursor: pointer;
+}
+
+.ship-container div.selected {
+	border: 2px solid black;
+	background-color: rgb(68, 68, 68);
+}
+
+/* Carrier */
+.ship-container div.carrier {
+	grid-area: carrier;
+}
+.carrier {
+	background-color: rgb(68, 68, 68);
+	width: 500%;
+	border-radius: 10px;
+}
+
+/* Battleship */
+.ship-container div.battleship {
+	grid-area: battleship;
+}
+.battleship {
+	background-color: rgb(68, 68, 68);
+	width: 400%;
+	border-radius: 50% 10% 10% 50% / 75% 25% 25% 75%;
+}
+
+/* Destroyer */
+.ship-container div.destroyer {
+	grid-area: destroyer;
+}
+.destroyer {
+	background-color: rgb(68, 68, 68);
+	width: 300%;
+	border-radius: 60% 10% 10% 60% / 75% 25% 25% 75%;
+}
+
+/* Submarine*/
+.ship-container div.submarine {
+	grid-area: submarine;
+}
+.submarine {
+	background-color: rgb(68, 68, 68);
+	width: 300%;
+	border-radius: 20% / 50%;
+}
+
+/* Patrol Boat */
+.ship-container div.patrol {
+	grid-area: patrol;
+}
+.patrol {
+	background-color: rgb(68, 68, 68);
+	width: 200%;
+	border-radius: 75% 25% 25% 75%;
 }
