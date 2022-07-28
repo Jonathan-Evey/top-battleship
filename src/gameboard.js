@@ -76,7 +76,7 @@ const Gameboard = () => {
 
 	function isHit(coordinates) {
 		let serchedShipPlacements;
-		for (let i = 0; i < placedShips.size; i++) {
+		for (let i = 0; i < placedShips.length; i++) {
 			serchedShipPlacements = placedShips[i].placement;
 			if (serchedShipPlacements.includes(coordinates)) {
 				foundShip = placedShips[i];
@@ -96,6 +96,14 @@ const Gameboard = () => {
 		return;
 	}
 
+	function isAllShipsPlaced() {
+		if (placedShips.length === 5) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	return {
 		playGrid,
 		shotsMissed,
@@ -103,6 +111,7 @@ const Gameboard = () => {
 		init,
 		place,
 		receiveAttack,
+		isAllShipsPlaced,
 	};
 };
 
