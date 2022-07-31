@@ -3,6 +3,7 @@ const Gameboard = () => {
 	const shotsMissed = [];
 	const shotsHit = [];
 	const placedShips = [];
+	const outcome = [];
 	const sunkShips = [];
 
 	//set up a 10X10 play grid Array that is A - J and 1 - 10
@@ -64,10 +65,12 @@ const Gameboard = () => {
 			return;
 		} else if (isHit(coordinates) === true) {
 			console.log("Hit");
+			outcome.unshift("Hit!");
 			handleHit(coordinates);
 			return;
 		} else {
 			console.log("miss");
+			outcome.unshift("Miss");
 			shotsMissed.push(coordinates);
 		}
 	};
@@ -108,6 +111,7 @@ const Gameboard = () => {
 		playGrid,
 		shotsMissed,
 		shotsHit,
+		outcome,
 		init,
 		place,
 		receiveAttack,
