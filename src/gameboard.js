@@ -65,13 +65,13 @@ const Gameboard = () => {
 			return;
 		} else if (isHit(coordinates) === true) {
 			console.log("Hit");
-			outcome.unshift("Hit!");
+			outcome.unshift(`${coordinates} - Hit!`);
 			handleHit(coordinates);
 			return;
 		} else {
 			console.log("miss");
 			outcome.unshift("Miss");
-			shotsMissed.push(coordinates);
+			shotsMissed.push(`${coordinates} - Miss`);
 		}
 	};
 
@@ -95,12 +95,25 @@ const Gameboard = () => {
 		console.log(placedShips);
 		if (foundShip.isSunk() === true) {
 			console.log(`The Enemy has sunk your ${foundShip.name}`);
+			sunkShips.push(foundShip);
+			outcome.unshift(
+				`${coordinates} - Enemy ${foundShip.name} has been sunk`
+			);
+			return;
 		}
 		return;
 	}
 
 	function isAllShipsPlaced() {
 		if (placedShips.length === 5) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function isGameOver() {
+		if (placedShips.length === sunkShips.length) {
 			return true;
 		} else {
 			return false;
@@ -116,6 +129,7 @@ const Gameboard = () => {
 		place,
 		receiveAttack,
 		isAllShipsPlaced,
+		isGameOver,
 	};
 };
 
