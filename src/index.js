@@ -2,45 +2,46 @@ import _ from "lodash";
 import Ship from "./ship";
 import Gameboard from "./gameboard";
 import Player from "./player";
-import HTML, { ships } from "./DOMElements";
+import HTML from "./DOMElements";
 
-let playerName;
 function init() {
-	HTML.userInputs.form.addEventListener("submit", (e) => {
+	HTML.startingElements.form.addEventListener("submit", (e) => {
 		e.preventDefault();
 	});
-	HTML.btns.startGame.addEventListener("click", () => {
-		playerName = HTML.userInputs.input.value;
-		clearElements(HTML.startingElements.HTMLBODY);
-		renderShipPlacementHTML();
+	HTML.startingElements.startGameBtn.addEventListener("click", () => {
 		initPlayers();
+		clearElements(HTML.PERMANENT.HTMLBODY);
+		renderShipPlacementHTML();
 		startPlacments(playerOne);
 	});
 }
 
 function renderShipPlacementHTML() {
-	HTML.startingElements.HTMLBODY.innerHTML =
-		HTML.placeShipHTMLIndex.HTMLTemplate;
+	HTML.PERMANENT.HTMLBODY.innerHTML = HTML.HTMLTemplates.placeShipHTMLIndex;
 }
 
 let gamePlayHTML;
 
 function renderGamePlayHTML() {
-	HTML.startingElements.HTMLBODY.innerHTML =
-		HTML.gamePlayHTMLIndex.HTMLTemplate;
+	HTML.PERMANENT.HTMLBODY.innerHTML = HTML.HTMLTemplates.gamePlayHTMLIndex;
 	gamePlayHTML = HTML.gamePlayElements();
 }
 
+let playerOneName;
+let playerTwoName;
 let playerOne;
 let playerTwo;
 function initPlayers() {
+	playerOneName = HTML.startingElements.inputUserOne.value;
+	playerTwoName = HTML.startingElements.inputUserTwo.value;
+
 	playerOne = {
-		details: Player(false, playerName),
+		details: Player(false, playerOneName),
 		board: Gameboard(),
 	};
 	console.log(playerOne);
 	playerTwo = {
-		details: Player(false),
+		details: Player(false, playerTwoName),
 		board: Gameboard(),
 	};
 	console.log(playerTwo);
@@ -58,6 +59,11 @@ function startPlacments(playerData) {
 	currentPlayer = playerData;
 	renderShipPlacementGrid();
 	shipSelectEventListener();
+	updateHeader();
+}
+
+function updateHeader() {
+	placeShipHTML.header.innerText = `Mission Control - ${currentPlayer.details.name}`;
 }
 
 const shipKeys = [
@@ -136,6 +142,17 @@ function startGame() {
 	creatListeners();
 }
 
+function showPassTurnScreen() {
+	clearElements(gamePlayHTML.dialog);
+	gamePlayHTML.dialog.innerHTML = HTML.HTMLTemplates.passTurnHTML;
+	let dialogTitle = document.getElementById("pass-turn-title");
+	dialogTitle.innerText = `${currentPlayer.details.name}'s Turn`;
+	let startTurnBtn = document.getElementById("start-turn-btn");
+	startTurnBtn.addEventListener("click", () => {
+		return dialog.close();
+	});
+}
+
 /// Set event listers on Enemy info Grid the when selected will
 /// update the launch missile display with the selected coordinates
 function creatListeners() {
@@ -176,8 +193,23 @@ function checkForCoordinates() {
 		let coordinates = gamePlayHTML.launchCoordinates.innerText;
 		gamePlayHTML.launchCoordinates.innerText = "";
 		enemyPlayer.board.receiveAttack(coordinates);
+		showOutcome();
 		switchPlayerTurn();
 	}
+}
+
+function showOutcome() {
+	clearElements(gamePlayHTML.dialog);
+	gamePlayHTML.dialog.innerHTML = HTML.HTMLTemplates.showOutcomeHTML;
+	let dialogTitle = document.getElementById("pass-turn-title");
+	gamePlayHTML.dialog.showModal();
+	gamePlayHTML.dialog.addEventListener("keydown", (e) => {
+		e.preventDefault();
+	});
+	dialogTitle.innerText = `${enemyPlayer.board.outcome[0]}`;
+	setTimeout(function () {
+		showPassTurnScreen();
+	}, 1500);
 }
 
 function switchPlayerTurn() {
@@ -354,14 +386,14 @@ function checkForGameStart() {
 		currentPlayer.board.isAllShipsPlaced() === true &&
 		currentPlayer === playerOne
 	) {
-		clearElements(HTML.startingElements.HTMLBODY);
+		clearElements(HTML.PERMANENT.HTMLBODY);
 		renderShipPlacementHTML();
 		startPlacments(playerTwo);
 	} else if (
 		currentPlayer.board.isAllShipsPlaced() === true &&
 		currentPlayer === playerTwo
 	) {
-		clearElements(HTML.startingElements.HTMLBODY);
+		clearElements(HTML.PERMANENT.HTMLBODY);
 		renderGamePlayHTML();
 		startGame();
 	} else {
