@@ -38,7 +38,7 @@ const HTML = (function () {
 	};
 
 	const placeShipHTMLIndex = {
-		HTMLTemplate: `<header>
+		HTMLTemplate: `<header class="game-play-header">
 		<div class="header-container">
 			<div class="header-title-container">
 				<h1>Misstion Control</h1>
@@ -100,7 +100,7 @@ const HTML = (function () {
 	};
 
 	const gamePlayHTMLIndex = {
-		HTMLTemplate: `<header>
+		HTMLTemplate: `<header class="game-play-header">
 		<div class="header-container">
 			<div class="header-title-container">
 				<h1>Mission Control</h1>
@@ -181,31 +181,12 @@ const HTML = (function () {
 				</div>
 				<div class="enemy-card" id="enemy-grid"></div>
 			</div>
-			<div class="enemy-ships">
-				<div class="ship-row row-one">
-					<div class="space"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="space"></div>
-				</div>
-				<div class="ship-row row-two">
-					<div class="ship-two"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="space"></div>
-					<div class="ship-two"></div>
-				</div>
-				<div class="ship-row row-three">
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="ship"></div>
-					<div class="space"></div>
-					<div class="ship-two"></div>
-					<div class="ship"></div>
-				</div>
+			<div class="enemy-ship-container" id="enemy-ship-container">
+				<div class="carrier" id="ship"></div>
+				<div class="battleship" id="ship"></div>
+				<div class="destroyer" id="ship"></div>
+				<div class="submarine" id="ship"></div>
+				<div class="patrol" id="ship"></div>
 			</div>
 		</aside>
 	</main>`,
