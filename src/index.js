@@ -4,11 +4,16 @@ import Gameboard from "./gameboard";
 import Player from "./player";
 import HTML from "./DOMElements";
 
+let startingElements;
+
 function init() {
-	HTML.startingElements.form.addEventListener("submit", (e) => {
+	clearElements(HTML.PERMANENT.HTMLBODY);
+	HTML.PERMANENT.HTMLBODY.innerHTML = HTML.HTMLTemplates.startingHTMLIndex;
+	startingElements = HTML.startingElements();
+	startingElements.form.addEventListener("submit", (e) => {
 		e.preventDefault();
 	});
-	HTML.startingElements.startGameBtn.addEventListener("click", () => {
+	startingElements.startGameBtn.addEventListener("click", () => {
 		initPlayers();
 		clearElements(HTML.PERMANENT.HTMLBODY);
 		renderShipPlacementHTML();
@@ -32,8 +37,8 @@ let playerTwoName;
 let playerOne;
 let playerTwo;
 function initPlayers() {
-	playerOneName = HTML.startingElements.inputUserOne.value;
-	playerTwoName = HTML.startingElements.inputUserTwo.value;
+	playerOneName = startingElements.inputUserOne.value;
+	playerTwoName = startingElements.inputUserTwo.value;
 
 	playerOne = {
 		details: Player(false, playerOneName),
@@ -194,22 +199,26 @@ function checkForCoordinates() {
 		gamePlayHTML.launchCoordinates.innerText = "";
 		enemyPlayer.board.receiveAttack(coordinates);
 		showOutcome();
-		switchPlayerTurn();
 	}
 }
 
 function showOutcome() {
-	clearElements(gamePlayHTML.dialog);
-	gamePlayHTML.dialog.innerHTML = HTML.HTMLTemplates.showOutcomeHTML;
-	let dialogTitle = document.getElementById("pass-turn-title");
-	gamePlayHTML.dialog.showModal();
-	gamePlayHTML.dialog.addEventListener("keydown", (e) => {
-		e.preventDefault();
-	});
-	dialogTitle.innerText = `${enemyPlayer.board.outcome[0]}`;
-	setTimeout(function () {
-		showPassTurnScreen();
-	}, 1500);
+	if (enemyPlayer.board.isGameOver() === true) {
+		updateToGameWon();
+	} else {
+		clearElements(gamePlayHTML.dialog);
+		gamePlayHTML.dialog.innerHTML = HTML.HTMLTemplates.showOutcomeHTML;
+		let dialogTitle = document.getElementById("pass-turn-title");
+		gamePlayHTML.dialog.showModal();
+		gamePlayHTML.dialog.addEventListener("keydown", (e) => {
+			e.preventDefault();
+		});
+		dialogTitle.innerText = `${enemyPlayer.board.outcome[0]}`;
+		setTimeout(function () {
+			showPassTurnScreen();
+			switchPlayerTurn();
+		}, 1500);
+	}
 }
 
 function switchPlayerTurn() {
@@ -399,6 +408,13 @@ function checkForGameStart() {
 	} else {
 		return;
 	}
+}
+
+function updateToGameWon() {
+	clearElements(HTML.PERMANENT.HTMLBODY);
+	let div = document.createElement("div");
+	div.innerText = `${currentPlayer} you won!`;
+	HTML.PERMANENT.HTMLBODY.appendChild(div);
 }
 
 init();
