@@ -3,11 +3,13 @@ const HTML = (function () {
 		HTMLBODY: document.body,
 	};
 
-	const startingElements = {
-		form: document.getElementById("start-game-form"),
-		inputUserOne: document.getElementById("user-name"),
-		inputUserTwo: document.getElementById("user-two-name"),
-		startGameBtn: document.getElementById("start-game"),
+	const startingElements = () => {
+		return (startingHTML = {
+			form: document.getElementById("start-game-form"),
+			inputUserOne: document.getElementById("user-name"),
+			inputUserTwo: document.getElementById("user-two-name"),
+			startGameBtn: document.getElementById("start-game"),
+		});
 	};
 
 	const placeShipElements = () => {
@@ -41,6 +43,31 @@ const HTML = (function () {
 	};
 
 	const HTMLTemplates = {
+		startingHTMLIndex: `
+		<header>
+			<div class="title-conatiner">
+				<h2 class="logo">BATTLESHIP</h2>
+				<span class="outline">BATTLESHIP</span>
+			</div>
+		</header>
+
+		<main>
+			<div class="game-options-card">
+				<header>
+					<h4>Game Options</h4>
+				</header>
+				<form id="start-game-form">
+					<label for="">Player One's Screen Name:</label>
+					<input type="text" name="" id="user-name" />
+
+					<label for="">Player Two's Screen Name:</label>
+					<input type="text" name="" id="user-two-name" />
+
+					<button type="submit" id="start-game">Start Game</button>
+				</form>
+			</div>
+		</main>`,
+
 		placeShipHTMLIndex: `<header class="game-play-header">
 			<div class="header-container">
 				<div class="header-title-container">
